@@ -63,3 +63,102 @@
         <script src="./resources/qgis2web.js"></script>
     </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Map with Map Elements</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com" />
+    
+    <style>
+        /* Forces the map container to take up the full browser screen */
+        html, body, #map {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Styling for the Custom Map Title */
+        .map-title {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        /* Styling for the North Arrow container */
+        .north-arrow {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .north-arrow img {
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fullscreen Map Wrapper Container -->
+    <div id="map"></div>
+
+    <!-- Leaflet JavaScript Library -->
+    <script src="https://unpkg.com"></script>
+
+    <script>
+        // 1. Initialize the map onto the fullscreen div
+        var map = L.map('map', {
+            zoomControl: true
+        }).setView([16.705, 74.243], 11); // Centered roughly around Karavir/Kolhapur region
+
+        // 2. Add your Base Map layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 3. Add the Map Scale Bar element
+        L.control.scale({
+            position: 'bottomleft', // Placed at the bottom-left corner
+            metric: true,           // Displays Kilometers and Meters
+            imperial: false         // Hides Miles and Feet
+        }).addTo(map);
+
+        // 4. Create and Add a Custom Map Title element
+        var mapTitleControl = L.control({ position: 'topleft' }); 
+        mapTitleControl.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'map-title');
+            div.innerHTML = 'Karavir Taluka Geographic Features'; // Replace with your own custom title string
+            return div;
+        };
+        mapTitleControl.addTo(map);
+
+        // 5. Create and Add a North Arrow element
+        var northArrowControl = L.control({ position: 'topright' }); 
+        northArrowControl.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'north-arrow');
+            // Uses a clean, open-source vector image for the north orientation indicator
+            div.innerHTML = '<img src="https://wikimedia.org" alt="North Arrow">';
+            return div;
+        };
+        northArrowControl.addTo(map);
+
+        // Note: You can paste your existing QGIS exported layer data variables below this line:
+        // L.geoJSON(json_Karavir_0).addTo(map);
+    </script>
+</body>
+</html>
