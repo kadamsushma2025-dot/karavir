@@ -12,13 +12,25 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         
-        <style>
-            /* Move Layer Switcher / Index to Bottom Left */
-.ol-unselectable.ol-control.layer-switcher {
+        <style/* Move Layer Switcher / Index to Bottom Left */
+.layer-switcher, 
+.ol-control.layer-switcher,
+div.layer-switcher {
     top: auto !important;
-    bottom: 10px !important;
+    bottom: 25px !important;
     left: 10px !important;
     right: auto !important;
+}
+
+/* Open layer panel menu positioning */
+.layer-switcher.panel,
+.layer-switcher .panel {
+    top: auto !important;
+    bottom: 25px !important;
+    left: 10px !important;
+    right: auto !important;
+}>
+            /* Move Layer Switcher / Index to Bottom Left */
 }
             /* Full Screen Map CSS */
             html, body {
